@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>CANDY POP</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+
+<!-- Add jQuery library -->
+<script type="text/javascript" src="./lib/jquery-1.9.0.min.js"></script>
+
+<!-- Add mousewheel plugin (this is optional) -->
+<script type="text/javascript" src="./lib/jquery.mousewheel-3.0.6.pack.js"></script>
+
+<!-- Add fancyBox main JS and CSS files -->
+<script type="text/javascript" src="./source/jquery.fancybox.js?v=2.1.4"></script>
+<link rel="stylesheet" type="text/css" href="./source/jquery.fancybox.css?v=2.1.4" media="screen" />
+
+<!-- Add Button helper (this is optional) -->
+<link rel="stylesheet" type="text/css" href="./source/helpers/jquery.fancybox-buttons.css?v=1.0.5" />
+<script type="text/javascript" src="./source/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+
+<!-- Add Thumbnail helper (this is optional) -->
+<link rel="stylesheet" type="text/css" href="./source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" />
+<script type="text/javascript" src="./source/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+
+<!-- Add Media helper (this is optional) -->
+<script type="text/javascript" src="./source/helpers/jquery.fancybox-media.js?v=1.0.5"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      /*
+       *  Simple image gallery. Uses default settings
+       */
+
+      $('.fancybox').fancybox({
+        closeBtn   : false,
+        closeClick : true
+      });
+
+    });
+</script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body>
+<div id="wrap">
+  <div id="masthead">
+    <h1>Candy Pop</h1>
+  </div>
+  <div id="container">
+    <div id="menu">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#" class="current">Product</a></li>        
+        <li><a href="contact-us.html">Contact Us</a></li>
+      </ul>
+    </div>
+    <div id="sidebar">
+      <h1>Side Content</h1>
+      <div id="navcontainer">
+        <ul>
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="#">PRODUCTS</a></li>
+          <li><a href="contact-us.html">CONTACT US</a></li>
+        </ul>
+      </div>
+      <p><img class="right" src="images/side.png" alt="" /></p>
+    </div>
+    <div id="content">
+      <h1><span style="font-weight:bold; color:#FDA913;">Candy Pop</span> Product List</h1>
+      <table  class='product'>
+        <tr>
+          <td>
+            <span style="font-weight:bold;font-size:15px">Candypop Lilin</span>
+            <a class="fancybox" href="images/1.jpg" data-fancybox-group="gallery" title="Candypop Lilin"><img src="images/1.jpg" height="200" width="200" alt="" /></a>
+          </td>
+          <td>
+            Tersedia dalam rasa : Stroberi, Jeruk, Anggur, Melon, Leci <br/>          
+            Berat : 18 gram, 1 kemasan plastic isi 30 pcs
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span style="font-weight:bold;font-size:15px">Candypop Hati</span>
+            <a class="fancybox" href="images/1.jpg" data-fancybox-group="gallery" title="Candypop Hati"><img src="images/1.jpg" height="200" width="200" alt="" /></a>
+          </td>
+          <td>
+            Tersedia dalam rasa : Stroberi, Jeruk, Anggur, Melon, Leci <br/>          
+            Berat : 35 gram, 1 kemasan plastic isi 30 pcs
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span style="font-weight:bold;font-size:15px">Candypop Bulat Besar</span>
+            <a class="fancybox" href="images/4.jpg" data-fancybox-group="gallery" title="Candypop Bulat Besar"><img src="images/4.jpg" height="100" width="200" alt="" /></a>
+          </td>
+          <td>
+            <span style="font-weight:bold;font-size:15px">*** BEST SELLER ***</span><br/>
+            Tersedia dalam rasa : Stroberi, Jeruk, Anggur, Melon, Leci <br/>          
+            Berat : 35 gram, 1 kemasan plastic isi 30 pcs
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span style="font-weight:bold;font-size:15px">Candypop Star</span>
+            <a class="fancybox" href="images/2.jpg" data-fancybox-group="gallery" title="Candypop Star"><img src="images/2.jpg" height="200" width="200" alt="" /></a>
+          </td>
+          <td>
+            <span style="font-weight:bold;font-size:15px">*** BEST SELLER ***</span><br/>
+            Tersedia dalam rasa : Stroberi, Jeruk, Anggur, Melon, Leci <br/>          
+            Berat : 18 gram, 1 kemasan plastic isi 30 pcs
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+<div id="footer"> <a href="http://www.free-css.com/">homepage</a> | <a href="http://www.free-css.com/">contact</a> | <a href="http://validator.w3.org/check?uri=referer">html</a> | <a href="http://jigsaw.w3.org/css-validator">css</a> | &copy; 2007 Anyone | Design by <a href="http://www.mitchinson.net"> www.mitchinson.net</a><br/>
+  This work is licensed under a <a rel="license" target="_blank" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 License</a> </div>
+</body>
+</html>
