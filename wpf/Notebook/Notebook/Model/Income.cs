@@ -7,7 +7,7 @@
 
     internal class Income
     {
-        public DateTime Date {get;set;}
+        public DateTime Date { get; set; }
 
         public string Buyer { get; set; }
 
@@ -22,6 +22,16 @@
         public Income()
         {
             this.Items = new List<Product>();
+        }
+
+        public void Load()
+        {
+            // TODO: load the data from database.
+        }
+
+        public void Save()
+        {
+            // TODO: Store the data into database.
         }
     }
 }
