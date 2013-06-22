@@ -1,8 +1,27 @@
 ﻿<Window x:Class="Notebook.ModelView.IncomeForm"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Faktur penjualan form" Height="300" Width="500">
+        xmlns:dg="http://schemas.microsoft.com/wpf/2008/toolkit"       
+        Title="Faktur penjualan form" Height="350" Width="500">
     <Grid>
-        
+        <Label Content="Faktur no:" Height="28" HorizontalAlignment="Left" Margin="24,24,0,0" Name="lInvoiceNo" VerticalAlignment="Top" Width="94" />
+        <Label Content="Nama pembeli:" Height="28" Margin="24,58,0,0" Name="lBuyer" VerticalAlignment="Top" HorizontalAlignment="Left" Width="94" />
+        <Label Content="Alamat pembeli:" Height="28" HorizontalAlignment="Left" Margin="24,92,0,0" Name="lAddress" VerticalAlignment="Top" Width="102" />
+        <Label Content="Tanggal:" Height="28" HorizontalAlignment="Left" Margin="24,126,0,0" Name="lDate" VerticalAlignment="Top" Width="102" />
+
+        <Grid Margin="24,160,24,34" Name="grid1">
+            <dg:DataGrid Name="dgProducts" ItemsSource="{Binding Path=Product}" AutoGenerateColumns="False">
+                <dg:DataGrid.Columns>
+                    <dg:DataGridTextColumn Header="Nama Produk" Binding="{Binding Name}" Width="3*"/>
+                    <dg:DataGridTextColumn Header="Jumlah" Binding="{Binding Quantity}" Width="3*"/>
+                    <dg:DataGridTextColumn Header="Harga Satuan" Binding="{Binding Price}" Width="3*"/>
+                </dg:DataGrid.Columns>
+            </dg:DataGrid>
+        </Grid>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="156,24,0,0" Name="tbInvoiceNo" VerticalAlignment="Top" Width="298" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="156,58,0,0" Name="tbBuyer" VerticalAlignment="Top" Width="298" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="156,94,0,0" Name="tbAddress" VerticalAlignment="Top" Width="298" />
+        <DatePicker Height="25" HorizontalAlignment="Left" Margin="156,126,0,0" Name="datePicker" VerticalAlignment="Top" Width="298" />
+        <Button Content="Simpan" Height="23" HorizontalAlignment="Left" Margin="379,283,0,0" Name="bSave" VerticalAlignment="Top" Width="75" />
     </Grid>
 </Window>
