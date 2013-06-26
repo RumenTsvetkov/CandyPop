@@ -20,14 +20,18 @@
     /// </summary>
     public partial class MainWindow : Window
     {
+        private DbAccess dbAccess;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            this.dbAccess = new DbAccess();
         }
 
         private void IncomeButtonClicked(object sender, RoutedEventArgs e)
         {
-            var incomeForm = new IncomeForm();
+            var incomeForm = new IncomeForm(this.dbAccess);
             incomeForm.Show();
         }
     }
