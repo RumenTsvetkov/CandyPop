@@ -22,6 +22,6 @@
         <TextBox Height="23" HorizontalAlignment="Left" Margin="156,58,0,0" Name="tbBuyer" VerticalAlignment="Top" Width="298" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="156,94,0,0" Name="tbAddress" VerticalAlignment="Top" Width="298" />
         <DatePicker Height="25" HorizontalAlignment="Left" Margin="156,126,0,0" Name="datePicker" VerticalAlignment="Top" Width="298" />
-        <Button Content="Simpan" Height="23" HorizontalAlignment="Left" Margin="379,283,0,0" Name="bSave" VerticalAlignment="Top" Width="75" />
+        <Button Content="Simpan" Height="23" HorizontalAlignment="Left" Margin="379,283,0,0" Name="bSave" VerticalAlignment="Top" Width="75" Click="bSave_Click" />
     </Grid>
 </Window>

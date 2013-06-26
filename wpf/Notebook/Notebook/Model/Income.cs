@@ -20,19 +20,18 @@
 
         public List<Product> Items { get; private set; }
 
-        string Note { get; set; }
+        public string Note { get; set; }
 
         public string Invoice_number { get; set; }
-        private SqlManager sqlManager { get; set; }
 
-        public Income(string invoice_number, string buyer, string address, DateTime date)
+        private DbAccess dbConnection;
+
+        private SqlManager sqlManager;
+
+        public Income(DbAccess dbAccess)
         {
-            this.Invoice_number = invoice_number;
-            this.Date = date;
-            this.Buyer = buyer;
-            this.Address = address;
-            this.Items = new List<Product>();
-            sqlManager = GetDBConnection();
+            this.dbConnection = dbAccess;
+            this.sqlManager = this.dbConnection.GetDBConnection();
         }
 
         public Income(DateTime date)
@@ -74,26 +73,13 @@
                 // function call to db to store each item
                 // SaveDataToDb(this.Invoice_number, this.Date, this.Buyer, this.Address, item.Name, item.Price, item.Quantity)
                 sqlManager.InsertInto(
-                        "income",
-                        new string[] { "invoice_number", "date","buyer", "address", "item","price", "quantity" },
+                        "Income",
+                        new string[] { "NB_FAKTUR", "DT_DATE","NM_CLIENT", "DS_ADDRESS", "NM_ITEM","QT_PRICE", "QT_QUANTITY" },
                         new object[] { Invoice_number, Date, Buyer, Address, item.Name, item.Price, item.Quantity},
                         string.Empty);
             }
         }
 
-        public SqlManager GetDBConnection()
-        {
-            string dataProvider = ConfigurationManager.AppSettings["dataProvider"];
-            string connectionString = ConfigurationManager.ConnectionStrings[dataProvider].ConnectionString;
-            SQLConnectionFactory sqlConnection = new SQLConnectionFactory(DbProviderFactories.GetFactory(dataProvider), connectionString);
-            sqlConnection.Connection.Open();
-            SqlManager sqlManager = new SqlManager(sqlConnection.Connection);
-            //if (sqlConnection.Connection.State == System.Data.ConnectionState.Open)
-            return sqlManager;
-            
-           
-
-        }
 
     }
 }
