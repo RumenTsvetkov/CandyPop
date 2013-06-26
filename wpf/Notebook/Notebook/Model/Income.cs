@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using SQLDataAccessLayer;
 
     internal class Income
     {
@@ -53,6 +54,8 @@
 
         public void Save()
         {
+             SQLConnectionFactory sqlConnectionFactory = new SQLConnectionFactory();
+             IDbConnection connection
             // TODO: Store the data into database.
             foreach (Product item in this.Items)
             {
@@ -61,5 +64,8 @@
 
             }
         }
+
+        public 
+
     }
 }

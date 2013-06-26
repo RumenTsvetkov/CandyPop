@@ -102,7 +102,12 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\SQLDataAccessLayer\SQLDataAccessLayer.csproj">
+      <Project>{6169A794-DF4A-4201-97A4-3ED4A321BECE}</Project>
+      <Name>SQLDataAccessLayer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
