@@ -34,11 +34,6 @@
             this.sqlManager = this.dbConnection.GetDBConnection();
         }
 
-        public Income(DateTime date)
-        {
-            this.Date = date;
-        }
-
         public void StoreAnItem(string name, float price, int quantity)
         {
             Product item = new Product();
@@ -48,20 +43,18 @@
             Items.Add(item);
         }
 
-        public void Load()
+        public void Load(string id)
         {
             // TODO: load the data from database.
             // function call to db to load stuff
             // LoadDataFromDb(this.Date)
             object[] result = sqlManager.SelectFrom(
-                   "income",
-                   new string[] { "invoice_number", "date", "buyer", "address", "item", "price", "quantity" },
+                   "Income",
+                   new string[] { "NB_FAKTUR", "DT_DATE", "NM_CLIENT", "DS_ADDRESS", "NM_ITEM", "QT_PRICE", "QT_QUANTITY" },
                    string.Empty);
 
             foreach (object record in result)
-            {
-
-              
+            {              
             }
         }
 

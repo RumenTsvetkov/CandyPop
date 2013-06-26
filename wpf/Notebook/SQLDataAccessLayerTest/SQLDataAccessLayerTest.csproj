@@ -96,6 +96,7 @@
     </None>
     <None Include="SQLDataAccessLayerTest.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>

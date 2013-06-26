@@ -5,7 +5,7 @@
     <Grid>
         <Menu Height="23" HorizontalAlignment="Left" Name="menu" VerticalAlignment="Top" Width="503">
             <MenuItem Name="file" Header="File" />
-            <MenuItem Name="sheet" Header="Pembukuan" Click="sheet_Click">
+            <MenuItem Name="sheet" Header="Pembukuan">
                 <MenuItem Name="income" Header="Faktur penjualan baru" Click="IncomeButtonClicked"/>
                 <MenuItem Name="expenditure" Header="Faktur pajak baru"/>                
             </MenuItem>

@@ -22,5 +22,10 @@ namespace Notebook.ModelView
         {
             InitializeComponent();
         }
+
+        private void bSave_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
