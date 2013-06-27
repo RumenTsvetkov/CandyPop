@@ -10,7 +10,7 @@
         <Label Content="Tanggal:" Height="28" HorizontalAlignment="Left" Margin="24,126,0,0" Name="lDate" VerticalAlignment="Top" Width="102" />
 
         <Grid Margin="24,160,24,34" Name="grid1">
-            <dg:DataGrid Name="dgProducts" ItemsSource="{Binding Path=Product}" AutoGenerateColumns="False">
+            <dg:DataGrid Name="dgProducts" ItemsSource="{Binding Path=Products}" AutoGenerateColumns="False">
                 <dg:DataGrid.Columns>
                     <dg:DataGridTextColumn Header="Nama Produk" Binding="{Binding Name}" Width="3*"/>
                     <dg:DataGridTextColumn Header="Jumlah" Binding="{Binding Quantity}" Width="3*"/>

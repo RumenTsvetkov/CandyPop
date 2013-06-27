@@ -14,6 +14,7 @@ namespace Notebook.ModelView
     using System.Windows.Media.Imaging;
     using System.Windows.Shapes;
     using Notebook.Model;
+using System.Collections.ObjectModel;
 
     /// <summary>
     /// Interaction logic for IncomeForm.xaml
@@ -22,14 +23,24 @@ namespace Notebook.ModelView
     {
         private DbAccess dbAccess;
 
-        // TODO: populate the products.
+        private ObservableCollection<Product> products = new ObservableCollection<Product>();
+
         // TODO: check the form, print out error if an incorrect value is given.
 
         public IncomeForm(DbAccess dbAccess)
         {
             InitializeComponent();
-
             this.dbAccess = dbAccess;
+
+            this.dgProducts.ItemsSource = this.Products;
+        }
+
+        internal ObservableCollection<Product> Products
+        {
+            get
+            {
+                return this.products;
+            }
         }
 
         private void bSave_Click(object sender, RoutedEventArgs e)
@@ -40,6 +51,11 @@ namespace Notebook.ModelView
             income.Buyer = this.tbBuyer.Text;
             income.Address = this.tbAddress.Text;
             income.Date = (DateTime)this.datePicker.SelectedDate;
+
+            foreach (var product in this.products)
+            {
+                income.Items.Add(product);
+            }
 
             income.Save();
         }

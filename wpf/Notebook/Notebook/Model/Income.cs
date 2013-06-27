@@ -32,16 +32,7 @@
         {
             this.dbConnection = dbAccess;
             this.sqlManager = this.dbConnection.GetDBConnection();
-        }
-
-        public void StoreAnItem(string name, float price, int quantity)
-        {
-            Product item = new Product();
-            item.Name  = name;
-            item.Price = price;
-            item.Quantity = quantity;
-            Items.Add(item);
-        }
+        }        
 
         public void Load(string id)
         {
