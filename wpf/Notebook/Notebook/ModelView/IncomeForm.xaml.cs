@@ -45,6 +45,40 @@ using System.Collections.ObjectModel;
 
         private void bSave_Click(object sender, RoutedEventArgs e)
         {
+            // validation
+            var error = string.Empty;
+
+            if (string.IsNullOrEmpty(this.tbInvoiceNo.Text))
+            {
+                error += "Error: Masukan no faktur penjualan !!\n";
+            }
+
+            if (string.IsNullOrEmpty(this.tbBuyer.Text))
+            {
+                error += "Error: Masukan nama pembeli !!\n";
+            }
+
+            if (string.IsNullOrEmpty(this.tbAddress.Text))
+            {
+                error += "Error: Masukan alamat pembeli !!\n";
+            }
+
+            if (this.datePicker.SelectedDate == null)
+            {
+                error += "Error: Masukan tanggal faktur penjualan !!\n";
+            }
+
+            if (this.products.Count == 0)
+            {
+                error += "Error: Masukan minimal 1 produk dalam transaksi !!\n";
+            }
+
+            if (!string.IsNullOrEmpty(error))
+            {
+                this.DialogBox(error, "Error");
+                return;
+            }
+
             var income = new Income(this.dbAccess);
 
             income.Invoice_number = this.tbInvoiceNo.Text;
@@ -58,6 +92,14 @@ using System.Collections.ObjectModel;
             }
 
             income.Save();
+
+            this.DialogBox("Transaksi tersimpan.", "Success");
+            this.Close();
+        }
+
+        private MessageBoxResult DialogBox(string message, string caption)
+        {
+            return MessageBox.Show(message, caption);
         }
     }
 }
