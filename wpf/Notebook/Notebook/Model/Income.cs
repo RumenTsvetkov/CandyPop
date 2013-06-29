@@ -32,6 +32,8 @@
         {
             this.dbConnection = dbAccess;
             this.sqlManager = this.dbConnection.GetDBConnection();
+
+            this.Items = new List<Product>();
         }        
 
         public void Load(string id)

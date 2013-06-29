@@ -14,6 +14,7 @@
     using System.Windows.Navigation;
     using System.Windows.Shapes;
     using Notebook.ModelView;
+    using Notebook.Model;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -33,6 +34,11 @@
         {
             var incomeForm = new IncomeForm(this.dbAccess);
             incomeForm.Show();
+        }
+
+        private List<Income> FindIncomes(DateTime startTime, DateTime endTime)
+        {
+            return null;
         }
     }
 }
