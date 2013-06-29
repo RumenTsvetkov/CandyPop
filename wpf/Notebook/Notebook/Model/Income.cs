@@ -42,10 +42,21 @@
             object[] result = sqlManager.SelectFrom(
                    "Income",
                    new string[] { "NB_FAKTUR", "DT_DATE", "NM_CLIENT", "DS_ADDRESS", "NM_ITEM", "QT_PRICE", "QT_QUANTITY" },
-                   string.Empty);
+                   "NB_FAKTUR = " + id.ToString() );//string.Empty);
 
             foreach (object record in result)
-            {              
+            {
+                Dictionary<string, object> temp = (Dictionary<string, object>)record;
+                Invoice_number = temp["NB_FAKTUR"].ToString();
+                Date = (DateTime)temp["DT_DATE"];
+                Buyer = temp["NM_CLIENT"].ToString();
+                Address = temp["DS_ADDRESS"].ToString();
+
+                Product item = new Product();
+                item.Name = temp["NM_ITEM"].ToString();
+                item.Price = (float)temp["QT_PRICE"];
+                item.Quantity = (int)temp["QT_QUANTITY"];
+                Items.Add(item );
             }
         }
 
