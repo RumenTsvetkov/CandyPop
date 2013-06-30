@@ -40,5 +40,10 @@
         {
             return null;
         }
+
+        private void FindClicked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
