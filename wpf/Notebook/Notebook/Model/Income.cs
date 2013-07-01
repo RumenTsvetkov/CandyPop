@@ -28,6 +28,8 @@
 
         private SqlManager sqlManager;
 
+        public float totalIncome { get; private set; }
+
         public Income(DbAccess dbAccess)
         {
             this.dbConnection = dbAccess;
@@ -38,14 +40,12 @@
 
         public void Load(string id)
         {
-            // TODO: load the data from database.
-            // function call to db to load stuff
-            // LoadDataFromDb(this.Date)
             object[] result = sqlManager.SelectFrom(
                    "Income",
                    new string[] { "NB_FAKTUR", "DT_DATE", "NM_CLIENT", "DS_ADDRESS", "NM_ITEM", "QT_PRICE", "QT_QUANTITY" },
                    "NB_FAKTUR = " + id.ToString() );//string.Empty);
 
+            totalIncome = 0;
             foreach (object record in result)
             {
                 Dictionary<string, object> temp = (Dictionary<string, object>)record;
@@ -59,6 +59,8 @@
                 item.Price = (float)temp["QT_PRICE"];
                 item.Quantity = (int)temp["QT_QUANTITY"];
                 Items.Add(item );
+
+                totalIncome = totalIncome + item.Price * item.Quantity;
             }
         }
 
@@ -76,7 +78,16 @@
                         string.Empty);
             }
         }
-
+        public object[] getFaktursByDates(DateTime startDate, DateTime endDate)
+        {
+            //SqlManager sqlManager;
+            //sqlManager = this.dbAccess.GetDBConnection();
+            object[] result = sqlManager.SelectFrom(
+                   "Income",
+                   new string[] { " distinct(NB_FAKTUR) " },
+                   "DT_DATE between " + "'" + startDate.ToString() + "' to '" + endDate.ToString() + "'");//string.Empty);
+            return result;
+        }
 
     }
 }

@@ -15,6 +15,7 @@
     using System.Windows.Shapes;
     using Notebook.ModelView;
     using Notebook.Model;
+    using SQLDataAccessLayer;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -36,8 +37,23 @@
             incomeForm.Show();
         }
 
-        private List<Income> FindIncomes(DateTime startTime, DateTime endTime)
+        private List<Income> FindIncomes(DateTime startDate, DateTime endDate)
         {
+            var income = new Income(this.dbAccess);
+            var result = income.getFaktursByDates(startDate, endDate);
+            
+            var incomeList = new List<Income>();
+            foreach (object record in result)
+            {
+                Dictionary<string, object> temp = (Dictionary<string, object>)record;
+                var singleIncome = new Income(this.dbAccess);
+                singleIncome.Load(temp["NB_FAKTUR"].ToString());
+                incomeList.Add(singleIncome);
+            }
+            if (incomeList.Count() > 0) 
+            {
+                return incomeList;
+            }
             return null;
         }
 
