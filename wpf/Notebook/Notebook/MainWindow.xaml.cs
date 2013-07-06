@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Linq;
     using System.Text;
     using System.Windows;
@@ -13,8 +14,8 @@
     using System.Windows.Media.Imaging;
     using System.Windows.Navigation;
     using System.Windows.Shapes;
-    using Notebook.ModelView;
     using Notebook.Model;
+    using Notebook.ModelView;
     using SQLDataAccessLayer;
 
     /// <summary>
@@ -24,11 +25,21 @@
     {
         private DbAccess dbAccess;
 
+        private ObservableCollection<Transactions> incomes = new ObservableCollection<Transactions>();
+
         public MainWindow()
         {
             InitializeComponent();
 
             this.dbAccess = new DbAccess();
+            
+            // For test only
+            var income = new Income(this.dbAccess);
+            income.Date = DateTime.Now;
+            income.InvoiceNumber = "001";
+            this.incomes.Add(income);
+
+            this.table.ItemsSource = this.incomes;
         }
 
         private void IncomeButtonClicked(object sender, RoutedEventArgs e)

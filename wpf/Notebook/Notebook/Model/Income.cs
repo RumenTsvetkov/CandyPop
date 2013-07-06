@@ -8,7 +8,7 @@
     using System.Configuration;
     using System.Data.Common;
 
-    internal class Income
+    internal class Income : Transactions
     {
         public DateTime Date { get; set; }
 
@@ -22,7 +22,7 @@
 
         public string Note { get; set; }
 
-        public string Invoice_number { get; set; }
+        public string InvoiceNumber { get; set; }
 
         private DbAccess dbConnection;
 
@@ -49,7 +49,7 @@
             foreach (object record in result)
             {
                 Dictionary<string, object> temp = (Dictionary<string, object>)record;
-                Invoice_number = temp["NB_FAKTUR"].ToString();
+                InvoiceNumber = temp["NB_FAKTUR"].ToString();
                 Date = (DateTime)temp["DT_DATE"];
                 Buyer = temp["NM_CLIENT"].ToString();
                 Address = temp["DS_ADDRESS"].ToString();
@@ -74,7 +74,7 @@
                 sqlManager.InsertInto(
                         "Income",
                         new string[] { "NB_FAKTUR", "DT_DATE","NM_CLIENT", "DS_ADDRESS", "NM_ITEM","QT_PRICE", "QT_QUANTITY" },
-                        new object[] { Invoice_number, Date, Buyer, Address, item.Name, item.Price, item.Quantity},
+                        new object[] { InvoiceNumber, Date, Buyer, Address, item.Name, item.Price, item.Quantity},
                         string.Empty);
             }
         }

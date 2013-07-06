@@ -81,7 +81,7 @@ using System.Collections.ObjectModel;
 
             var income = new Income(this.dbAccess);
 
-            income.Invoice_number = this.tbInvoiceNo.Text;
+            income.InvoiceNumber = this.tbInvoiceNo.Text;
             income.Buyer = this.tbBuyer.Text;
             income.Address = this.tbAddress.Text;
             income.Date = (DateTime)this.datePicker.SelectedDate;
