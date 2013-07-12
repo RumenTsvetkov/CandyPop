@@ -8,7 +8,7 @@
     using System.Configuration;
     using System.Data.Common;
 
-    internal class Income : Transactions
+    public class Income : Transactions
     {
         public DateTime Date { get; set; }
 

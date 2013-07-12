@@ -17,6 +17,7 @@
     using Notebook.Model;
     using Notebook.ModelView;
     using SQLDataAccessLayer;
+    using Notebook.Reports;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -34,9 +35,13 @@
             this.dbAccess = new DbAccess();
             
             // For test only
-            var income = new Income(this.dbAccess);
-            income.Date = DateTime.Now;
-            income.InvoiceNumber = "001";
+            var income = new Income(this.dbAccess)
+            {
+                Buyer = "PT.INTI CAHAYA BUANA",
+                Address = "Komplek industri greenland ab no.46",
+                Date = DateTime.Now,
+                InvoiceNumber = "SG001"
+            };
             this.incomes.Add(income);
 
             this.table.ItemsSource = this.incomes;
@@ -70,7 +75,18 @@
 
         private void FindClicked(object sender, RoutedEventArgs e)
         {
+        }
 
+        private void ExpenseButtonClicked(object sender, RoutedEventArgs e)
+        {            
+        }
+
+        private void ViewTransactionClicked(object sender, RoutedEventArgs e)
+        {
+            Income selectedIncome = this.incomes.Where(
+                i => (sender as Button).Tag.ToString() == (i as Income).InvoiceNumber).Single() as Income;
+            var incomeReport = new IncomeReport(selectedIncome);
+            incomeReport.Show();
         }
     }
 }

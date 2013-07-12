@@ -24,7 +24,7 @@
                 <Label Style="{StaticResource RowStyle}" Grid.Column="1" Content="{Binding Path=InvoiceNumber, Mode=OneWay}" />
                 <Label Style="{StaticResource RowStyle}" Grid.Column="2" Content="{Binding Path=Debit, Mode=OneWay}" />
                 <Label Style="{StaticResource RowStyle}" Grid.Column="3" Content="{Binding Path=Credit, Mode=OneWay}" />
-                <Button Grid.Column="4" Width="28" Height="28" Command="{Binding ViewCommand}">
+                <Button Grid.Column="4" Width="28" Height="28" Click="ViewTransactionClicked" Tag="{Binding Path=InvoiceNumber}">
                     <StackPanel>
                         <Image Source="/Notebook;component/Icons/view-icon.png" Width="20" Height="20"/>
                     </StackPanel>
@@ -79,7 +79,7 @@
             <MenuItem Name="file" Header="File" />
             <MenuItem Name="sheet" Header="Pembukuan">
                 <MenuItem Name="income" Header="Faktur penjualan baru" Click="IncomeButtonClicked"/>
-                <MenuItem Name="expenditure" Header="Faktur pajak baru"/>                
+                <MenuItem Name="expenditure" Header="Faktur pajak baru" Click="ExpenseButtonClicked"/>                
             </MenuItem>
         </Menu>
         <GroupBox Header="Pencarian" Height="75" Margin="12,29,0,0" Name="groupBox1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="479">

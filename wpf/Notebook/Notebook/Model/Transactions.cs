@@ -7,7 +7,7 @@ namespace Notebook.Model
     using System.Linq;
     using System.Text;
     
-    internal class Transactions
+    public class Transactions
     {
         public float Total { get; set; }
 
@@ -31,6 +31,6 @@ namespace Notebook.Model
                 // TODO: fix this as soon as we have expenses class.
                 return "-";
             }
-        }
+        }       
     }
 }

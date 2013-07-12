@@ -2,7 +2,7 @@
 {
     using System;
 
-    internal class Product
+    public class Product
     {
         public string Name { get; set; }
 
