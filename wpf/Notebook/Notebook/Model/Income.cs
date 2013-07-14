@@ -28,8 +28,6 @@
 
         private SqlManager sqlManager;
 
-        public float totalIncome { get; private set; }
-
         public Income(DbAccess dbAccess)
         {
             this.dbConnection = dbAccess;
@@ -43,9 +41,8 @@
             object[] result = sqlManager.SelectFrom(
                    "Income",
                    new string[] { "NB_FAKTUR", "DT_DATE", "NM_CLIENT", "DS_ADDRESS", "NM_ITEM", "QT_PRICE", "QT_QUANTITY" },
-                   "NB_FAKTUR = " + id.ToString() );//string.Empty);
+                   string.Format("NB_FAKTUR = '{0}'", id));
 
-            totalIncome = 0;
             foreach (object record in result)
             {
                 Dictionary<string, object> temp = (Dictionary<string, object>)record;
@@ -59,8 +56,6 @@
                 item.Price = (float) Convert.ChangeType(temp["QT_PRICE"], typeof(float));
                 item.Quantity = (int) Convert.ChangeType(temp["QT_QUANTITY"], typeof(int));
                 Items.Add(item );
-
-                totalIncome = totalIncome + item.Price * item.Quantity;
             }
         }
 
@@ -78,20 +73,17 @@
                         string.Empty);
             }
         }
-        public object[] getFaktursByDates(DateTime startDate, DateTime endDate)
-        {
-            //SqlManager sqlManager;
-            //sqlManager = this.dbAccess.GetDBConnection();
-            string newStartDate;
-            string newEndDate;
-            newStartDate =  startDate.ToString("yyyy-MM-dd");
-            newEndDate = endDate.ToString("yyyy-MM-dd");
-            object[] result = sqlManager.SelectFrom(
-                   "Income",
-                   new string[] {"NB_FAKTUR"},
-                   "DT_DATE between " + "'" + newStartDate + "' and '" + newEndDate  + "'");//string.Empty);
-            return result;
-        }
 
+        protected override float CalculateGrandTotal()
+        {
+            var total = 0.0f;
+
+            foreach (var product in this.Items)
+            {
+                total += product.Price * product.Quantity;
+            }
+
+            return total;
+        }
     }
 }

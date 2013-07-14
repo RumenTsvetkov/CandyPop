@@ -38,7 +38,6 @@
                     </TableCell>
                 </TableRow>
             </TableRowGroup>
-            
         </Table>
         <xrd:SectionDataGroup DataGroupName="ItemList">
             <Table CellSpacing="0" BorderBrush="Black" BorderThickness="0.02cm">
@@ -47,6 +46,12 @@
                     <Style x:Key="headerFooterRowStyle" TargetType="{x:Type TableRowGroup}">
                         <Setter Property="FontWeight" Value="DemiBold" />
                         <Setter Property="FontSize" Value="16"/>
+                    </Style>
+
+                    <!-- Style for second header/footer rows. -->
+                    <Style x:Key="secondHeaderFooterRowStyle" TargetType="{x:Type TableRowGroup}">
+                        <Setter Property="FontWeight" Value="DemiBold" />
+                        <Setter Property="FontSize" Value="13"/>
                     </Style>
                     
                     <!-- Style for data cells. -->
@@ -57,7 +62,7 @@
                     </Style>
                 </Table.Resources>
                 <Table.Columns>
-                    <TableColumn Width="0.1*" />
+                    <TableColumn Width="0.2*" />
                     <TableColumn Width="*" />
                     <TableColumn Width="0.5*" />
                     <TableColumn Width="0.5*" />
@@ -76,7 +81,7 @@
                     <TableRow>
                         <TableCell ColumnSpan="3">
                             <Paragraph>
-                                Tanggal: <xrd:InlineDocumentValue PropertyName="TransactionDate"/>
+                                Tanggal <xrd:InlineDocumentValue PropertyName="TransactionDate"/>
                             </Paragraph>
                         </TableCell>
                         <TableCell ColumnSpan="2">
@@ -86,7 +91,95 @@
                         </TableCell>
                     </TableRow>
                 </TableRowGroup>
+                <TableRowGroup Style="{StaticResource secondHeaderFooterRowStyle}">
+                    <TableRow>
+                        <TableCell>
+                            <Paragraph>No</Paragraph>
+                        </TableCell>
+                        <TableCell>
+                            <Paragraph>Nama Barang</Paragraph>
+                        </TableCell>
+                        <TableCell>
+                            <Paragraph>Qty</Paragraph>
+                        </TableCell>
+                        <TableCell>
+                            <Paragraph>Harga Satuan</Paragraph>
+                        </TableCell>
+                        <TableCell>
+                            <Paragraph>Jumlah</Paragraph>
+                        </TableCell>
+                    </TableRow>
+                </TableRowGroup>
+                <TableRowGroup>
+                    <xrd:TableRowForDataTable TableName="list">
+                        <TableCell>
+                            <Paragraph>
+                                <xrd:InlineTableCellValue PropertyName="No"/>
+                            </Paragraph>
+                        </TableCell>
+                        <TableCell>
+                            <Paragraph>
+                                <xrd:InlineTableCellValue PropertyName="Name"/>
+                            </Paragraph>
+                        </TableCell>
+                        <TableCell>
+                            <Paragraph>
+                                <xrd:InlineTableCellValue PropertyName="Quantity"/>
+                            </Paragraph>
+                        </TableCell>
+                        <TableCell>
+                            <Paragraph>
+                                <xrd:InlineTableCellValue PropertyName="Price"/>
+                            </Paragraph>
+                        </TableCell>
+                        <TableCell>
+                            <Paragraph>
+                                <xrd:InlineTableCellValue PropertyName="TotalPrice"/>
+                            </Paragraph>
+                        </TableCell>
+                    </xrd:TableRowForDataTable>
+                </TableRowGroup>
+                <TableRowGroup Style="{StaticResource secondHeaderFooterRowStyle}">
+                    <TableRow>
+                        <TableCell ColumnSpan="3">
+                        </TableCell>
+                        <TableCell>
+                            <Paragraph>
+                                    Grand Total
+                            </Paragraph>
+                        </TableCell>
+                        <TableCell>
+                            <Paragraph>
+                                <xrd:InlineDocumentValue PropertyName="GrandTotal"/>
+                            </Paragraph>
+                        </TableCell>
+                    </TableRow>
+                </TableRowGroup>
             </Table>
         </xrd:SectionDataGroup>
+        <Paragraph>
+            <LineBreak/>
+            <LineBreak/>
+        </Paragraph>
+        <Table>
+            <Table.Columns>
+                <TableColumn Width="2*" />
+                <TableColumn Width="*" />
+            </Table.Columns>
+            <TableRowGroup>
+                <TableRow>
+                    <TableCell>
+                        <Paragraph>
+                           Jatuh tempo,
+                        </Paragraph>
+                    </TableCell>
+                    <TableCell>
+                        <Paragraph>
+                            Penerima,
+                        </Paragraph>
+                    </TableCell>
+                </TableRow>
+            </TableRowGroup>
+        </Table>
     </Section>
 </FlowDocument>

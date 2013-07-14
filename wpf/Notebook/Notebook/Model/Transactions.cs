@@ -9,7 +9,13 @@ namespace Notebook.Model
     
     public class Transactions
     {
-        public float Total { get; set; }
+        public float Total 
+        { 
+            get
+            {
+                return this.CalculateGrandTotal();
+            }
+        }
 
         public string Credit
         {
@@ -31,6 +37,11 @@ namespace Notebook.Model
                 // TODO: fix this as soon as we have expenses class.
                 return "-";
             }
-        }       
+        }
+
+        protected virtual float CalculateGrandTotal()
+        {
+            return 0.0f;
+        }
     }
 }

@@ -15,6 +15,7 @@
     using CodeReason.Reports;
     using System.Windows.Xps.Packaging;
     using Notebook.Model;
+    using System.Data;
 
     /// <summary>
     /// Interaction logic for IncomeReport.xaml
@@ -48,6 +49,22 @@
                 data.ReportDocumentValues.Add("TransactionDate", this.income.Date.ToShortDateString());
                 data.ReportDocumentValues.Add("InvoiceNumber", this.income.InvoiceNumber);
 
+                // table list
+                var table = new DataTable("list");
+                table.Columns.Add("No", typeof(string));
+                table.Columns.Add("Name", typeof(string));
+                table.Columns.Add("Quantity", typeof(int));
+                table.Columns.Add("Price", typeof(float));
+                table.Columns.Add("TotalPrice", typeof(float));
+
+                for (var i = 0; i < this.income.Items.Count; i++)
+                {
+                    var item = this.income.Items[i];
+                    table.Rows.Add(new object[] { i + 1, item.Name, item.Quantity, item.Price, item.Quantity * item.Price });
+                }
+
+                data.DataTables.Add(table);
+                data.ReportDocumentValues.Add("GrandTotal", this.income.Total);
 
                 XpsDocument xps = reportDocument.CreateXpsDocument(data);
                 documentViewer.Document = xps.GetFixedDocumentSequence();

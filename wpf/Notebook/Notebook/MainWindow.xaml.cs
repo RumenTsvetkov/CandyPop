@@ -34,15 +34,15 @@
 
             this.dbAccess = new DbAccess();
             
-            // For test only
-            var income = new Income(this.dbAccess)
-            {
-                Buyer = "PT.INTI CAHAYA BUANA",
-                Address = "Komplek industri greenland ab no.46",
-                Date = DateTime.Now,
-                InvoiceNumber = "SG001"
-            };
-            this.incomes.Add(income);
+            ////// For test only
+            ////var income = new Income(this.dbAccess)
+            ////{
+            ////    Buyer = "PT.INTI CAHAYA BUANA",
+            ////    Address = "Komplek industri greenland ab no.46",
+            ////    Date = DateTime.Now,
+            ////    InvoiceNumber = "SG001"
+            ////};
+            ////this.incomes.Add(income);
 
             this.table.ItemsSource = this.incomes;
         }
@@ -53,81 +53,50 @@
             incomeForm.Show();
         }
 
-        private List<Income> FindIncomes(DateTime startDate, DateTime endDate)
+        private void FindIncomes(DateTime startDate, DateTime endDate)
         {
-            var income = new Income(this.dbAccess);
-            var result = income.getFaktursByDates(startDate, endDate);
-            //var resultNoDupes = result.Distinct().ToList();
+            var result = this.getFaktursByDates(startDate, endDate);
             
             var fakturs = new List<string>();
-            foreach (object record in result)//NoDupes)
+            foreach (object record in result)
             {
                 Dictionary<string, object> temp = (Dictionary<string, object>)record;
                 fakturs.Add(temp["NB_FAKTUR"].ToString());
             }
 
             var faktursNoDupes = fakturs.Distinct().ToList();
-            var incomeList = new List<Income>();
             foreach (string faktur in faktursNoDupes)
             {
-                var singleIncome = new Income(this.dbAccess);
-                singleIncome.Load(faktur);
-                singleIncome.Total = singleIncome.totalIncome;
-                incomeList.Add(singleIncome);
-            }
-            if (incomeList.Count() > 0) 
-            {
-                return incomeList;
-            }
-            return null;
+                var income = new Income(this.dbAccess);
+                income.Load(faktur);
+                this.incomes.Add(income);
+            }            
         }
 
         private void FindClicked(object sender, RoutedEventArgs e)
         {
-            var listIncomes = new List<Income>();
-            //Income income = new Income(this.dbAccess);
-
-
             if (dStart.ToString() == "")
             {
-                MessageBox.Show("Silah pilih tanggal mulai");
-
+                MessageBox.Show("Silahkan pilih tanggal mulai");
             }
             else if (dEnd.ToString() == "")
             {
-                MessageBox.Show("Silah pilih tanggal akhir");
+                MessageBox.Show("Silahkan pilih tanggal akhir");
 
             }
             else if (dEnd.SelectedDate < dStart.SelectedDate)
             {
-
-                MessageBox.Show("Silah pilih tanggal awal lebih kecil dr tanggal akhir");
+                MessageBox.Show("Silahkan pilih tanggal awal lebih kecil dr tanggal akhir");
             }
-
             else
             {
                 this.incomes.Clear();
-                listIncomes = FindIncomes((DateTime)dStart.SelectedDate, (DateTime)dEnd.SelectedDate);
-                if (listIncomes != null)
-                {
-                    
-                    foreach (Income singleIncome in listIncomes)
-                    {
-                        this.incomes.Add(singleIncome);
-                        this.table.ItemsSource = this.incomes;
-
-                    }
-                }
-                else
+                this.FindIncomes((DateTime)dStart.SelectedDate, (DateTime)dEnd.SelectedDate);
+                if (this.incomes.Count == 0)
                 {
                     MessageBox.Show("Tidak ditemukan daftar transaksi");
                 }
-                
-                
             }
-
-            
-
         }
 
         private void ExpenseButtonClicked(object sender, RoutedEventArgs e)
@@ -144,7 +113,20 @@
 
         private void sheet_Click(object sender, RoutedEventArgs e)
         {
+        }
 
+        private object[] getFaktursByDates(DateTime startDate, DateTime endDate)
+        {
+            var sqlManager = this.dbAccess.GetDBConnection();
+
+            var newStartDate = startDate.ToString("yyyy-MM-dd");
+            var newEndDate = endDate.ToString("yyyy-MM-dd");
+
+            object[] result = sqlManager.SelectFrom(
+                   "Income",
+                   new string[] { "NB_FAKTUR" },
+                   "DT_DATE between " + "'" + newStartDate + "' and '" + newEndDate + "'");
+            return result;
         }
     }
 }
