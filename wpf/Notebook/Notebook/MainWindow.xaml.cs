@@ -57,13 +57,22 @@
         {
             var income = new Income(this.dbAccess);
             var result = income.getFaktursByDates(startDate, endDate);
+            //var resultNoDupes = result.Distinct().ToList();
             
-            var incomeList = new List<Income>();
-            foreach (object record in result)
+            var fakturs = new List<string>();
+            foreach (object record in result)//NoDupes)
             {
                 Dictionary<string, object> temp = (Dictionary<string, object>)record;
+                fakturs.Add(temp["NB_FAKTUR"].ToString());
+            }
+
+            var faktursNoDupes = fakturs.Distinct().ToList();
+            var incomeList = new List<Income>();
+            foreach (string faktur in faktursNoDupes)
+            {
                 var singleIncome = new Income(this.dbAccess);
-                singleIncome.Load(temp["NB_FAKTUR"].ToString());
+                singleIncome.Load(faktur);
+                singleIncome.Total = singleIncome.totalIncome;
                 incomeList.Add(singleIncome);
             }
             if (incomeList.Count() > 0) 
