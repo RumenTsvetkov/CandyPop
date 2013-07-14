@@ -76,7 +76,7 @@
                     <TableRow>
                         <TableCell ColumnSpan="3">
                             <Paragraph>
-                                Tanggal
+                                Tanggal: <xrd:InlineDocumentValue PropertyName="TransactionDate"/>
                             </Paragraph>
                         </TableCell>
                         <TableCell ColumnSpan="2">

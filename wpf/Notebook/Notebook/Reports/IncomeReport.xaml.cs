@@ -45,7 +45,9 @@
 
                 data.ReportDocumentValues.Add("Buyer", this.income.Buyer);
                 data.ReportDocumentValues.Add("Address", this.income.Address);
+                data.ReportDocumentValues.Add("TransactionDate", this.income.Date.ToShortDateString());
                 data.ReportDocumentValues.Add("InvoiceNumber", this.income.InvoiceNumber);
+
 
                 XpsDocument xps = reportDocument.CreateXpsDocument(data);
                 documentViewer.Document = xps.GetFixedDocumentSequence();
