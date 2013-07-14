@@ -56,8 +56,8 @@
 
                 Product item = new Product();
                 item.Name = temp["NM_ITEM"].ToString();
-                item.Price = (float)temp["QT_PRICE"];
-                item.Quantity = (int)temp["QT_QUANTITY"];
+                item.Price = (float) Convert.ChangeType(temp["QT_PRICE"], typeof(float));
+                item.Quantity = (int) Convert.ChangeType(temp["QT_QUANTITY"], typeof(int));
                 Items.Add(item );
 
                 totalIncome = totalIncome + item.Price * item.Quantity;
@@ -82,10 +82,14 @@
         {
             //SqlManager sqlManager;
             //sqlManager = this.dbAccess.GetDBConnection();
+            string newStartDate;
+            string newEndDate;
+            newStartDate =  startDate.ToString("yyyy-MM-dd");
+            newEndDate = endDate.ToString("yyyy-MM-dd");
             object[] result = sqlManager.SelectFrom(
                    "Income",
-                   new string[] { " distinct(NB_FAKTUR) " },
-                   "DT_DATE between " + "'" + startDate.ToString() + "' to '" + endDate.ToString() + "'");//string.Empty);
+                   new string[] {"NB_FAKTUR"},
+                   "DT_DATE between " + "'" + newStartDate + "' and '" + newEndDate  + "'");//string.Empty);
             return result;
         }
 

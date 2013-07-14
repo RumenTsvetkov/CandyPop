@@ -75,6 +75,50 @@
 
         private void FindClicked(object sender, RoutedEventArgs e)
         {
+            var listIncomes = new List<Income>();
+            //Income income = new Income(this.dbAccess);
+
+
+            if (dStart.ToString() == "")
+            {
+                MessageBox.Show("Silah pilih tanggal mulai");
+
+            }
+            else if (dEnd.ToString() == "")
+            {
+                MessageBox.Show("Silah pilih tanggal akhir");
+
+            }
+            else if (dEnd.SelectedDate < dStart.SelectedDate)
+            {
+
+                MessageBox.Show("Silah pilih tanggal awal lebih kecil dr tanggal akhir");
+            }
+
+            else
+            {
+                this.incomes.Clear();
+                listIncomes = FindIncomes((DateTime)dStart.SelectedDate, (DateTime)dEnd.SelectedDate);
+                if (listIncomes != null)
+                {
+                    
+                    foreach (Income singleIncome in listIncomes)
+                    {
+                        this.incomes.Add(singleIncome);
+                        this.table.ItemsSource = this.incomes;
+
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Tidak ditemukan daftar transaksi");
+                }
+                
+                
+            }
+
+            
+
         }
 
         private void ExpenseButtonClicked(object sender, RoutedEventArgs e)
@@ -87,6 +131,11 @@
                 i => (sender as Button).Tag.ToString() == (i as Income).InvoiceNumber).Single() as Income;
             var incomeReport = new IncomeReport(selectedIncome);
             incomeReport.Show();
+        }
+
+        private void sheet_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
