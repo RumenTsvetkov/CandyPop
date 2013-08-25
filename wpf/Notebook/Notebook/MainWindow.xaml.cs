@@ -48,9 +48,9 @@
         }
 
         // TODO: should search both incomes and expenditure
-        private void FindTransactions(DateTime startDate, DateTime endDate)
+        private void FindIncomeTransactions(DateTime startDate, DateTime endDate)
         {
-            var result = this.getFaktursByDates(startDate, endDate);
+            var result = this.getFaktursByDates(startDate, endDate, "Income");
             
             var fakturs = new List<string>();
             foreach (object record in result)
@@ -67,7 +67,25 @@
                 this.transactions.Add(income);
             }            
         }
+        private void FindExpenseTransactions(DateTime startDate, DateTime endDate)
+        {
+            var result = this.getFaktursByDates(startDate, endDate, "Expense"); 
 
+            var fakturs = new List<string>();
+            foreach (object record in result)
+            {
+                Dictionary<string, object> temp = (Dictionary<string, object>)record;
+                fakturs.Add(temp["NB_FAKTUR"].ToString());
+            }
+
+            var faktursNoDupes = fakturs.Distinct().ToList();
+            foreach (string faktur in faktursNoDupes)
+            {
+                var expense = new Expense(this.dbAccess);
+                expense.Load(faktur);
+                this.transactions.Add(expense);
+            }
+        }
         // TODO: should display both incomes and expenditure (Gita)
         private void FindClicked(object sender, RoutedEventArgs e)
         {
@@ -87,7 +105,8 @@
             else
             {
                 this.transactions.Clear();
-                this.FindTransactions((DateTime)dStart.SelectedDate, (DateTime)dEnd.SelectedDate);
+                this.FindIncomeTransactions((DateTime)dStart.SelectedDate, (DateTime)dEnd.SelectedDate);
+                this.FindExpenseTransactions((DateTime)dStart.SelectedDate, (DateTime)dEnd.SelectedDate);
                 if (this.transactions.Count == 0)
                 {
                     MessageBox.Show("Tidak ditemukan daftar transaksi");
@@ -114,7 +133,7 @@
         {
         }
 
-        private object[] getFaktursByDates(DateTime startDate, DateTime endDate)
+        private object[] getFaktursByDates(DateTime startDate, DateTime endDate, string dbtablename)
         {
             var sqlManager = this.dbAccess.GetDBConnection();
 
@@ -122,7 +141,7 @@
             var newEndDate = endDate.ToString("yyyy-MM-dd");
 
             object[] result = sqlManager.SelectFrom(
-                   "Income",
+                   dbtablename,
                    new string[] { "NB_FAKTUR" },
                    "DT_DATE between " + "'" + newStartDate + "' and '" + newEndDate + "'");
             return result;
