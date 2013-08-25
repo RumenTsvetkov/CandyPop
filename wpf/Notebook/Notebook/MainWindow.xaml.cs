@@ -19,6 +19,11 @@
     using SQLDataAccessLayer;
     using Notebook.Reports;
 
+    // TODO:
+    // 1. make the transactions editable (to be discussed).
+    // 2. make the transcations deletable (to be discussed).
+    // 3. feature for generating graph report (Indra).
+    // 4. Added expense table into database, have a look at Expense.cs to find out what need to be stored in the database (Felix). 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -26,25 +31,14 @@
     {
         private DbAccess dbAccess;
 
-        private ObservableCollection<Transactions> incomes = new ObservableCollection<Transactions>();
+        private ObservableCollection<Transactions> transactions = new ObservableCollection<Transactions>();
 
         public MainWindow()
         {
             InitializeComponent();
 
-            this.dbAccess = new DbAccess();
-            
-            ////// For test only
-            ////var income = new Income(this.dbAccess)
-            ////{
-            ////    Buyer = "PT.INTI CAHAYA BUANA",
-            ////    Address = "Komplek industri greenland ab no.46",
-            ////    Date = DateTime.Now,
-            ////    InvoiceNumber = "SG001"
-            ////};
-            ////this.incomes.Add(income);
-
-            this.table.ItemsSource = this.incomes;
+            this.dbAccess = new DbAccess();           
+            this.table.ItemsSource = this.transactions;
         }
 
         private void IncomeButtonClicked(object sender, RoutedEventArgs e)
@@ -53,7 +47,8 @@
             incomeForm.Show();
         }
 
-        private void FindIncomes(DateTime startDate, DateTime endDate)
+        // TODO: should search both incomes and expenditure
+        private void FindTransactions(DateTime startDate, DateTime endDate)
         {
             var result = this.getFaktursByDates(startDate, endDate);
             
@@ -69,10 +64,11 @@
             {
                 var income = new Income(this.dbAccess);
                 income.Load(faktur);
-                this.incomes.Add(income);
+                this.transactions.Add(income);
             }            
         }
 
+        // TODO: should display both incomes and expenditure (Gita)
         private void FindClicked(object sender, RoutedEventArgs e)
         {
             if (dStart.ToString() == "")
@@ -90,9 +86,9 @@
             }
             else
             {
-                this.incomes.Clear();
-                this.FindIncomes((DateTime)dStart.SelectedDate, (DateTime)dEnd.SelectedDate);
-                if (this.incomes.Count == 0)
+                this.transactions.Clear();
+                this.FindTransactions((DateTime)dStart.SelectedDate, (DateTime)dEnd.SelectedDate);
+                if (this.transactions.Count == 0)
                 {
                     MessageBox.Show("Tidak ditemukan daftar transaksi");
                 }
@@ -100,12 +96,15 @@
         }
 
         private void ExpenseButtonClicked(object sender, RoutedEventArgs e)
-        {            
+        {
+            var expenseForm = new ExpenseForm(this.dbAccess);
+            expenseForm.Show();
         }
 
+        // TODO: make it work for both income and expenditure. (Gita)
         private void ViewTransactionClicked(object sender, RoutedEventArgs e)
         {
-            Income selectedIncome = this.incomes.Where(
+            Income selectedIncome = this.transactions.Where(
                 i => (sender as Button).Tag.ToString() == (i as Income).InvoiceNumber).Single() as Income;
             var incomeReport = new IncomeReport(selectedIncome);
             incomeReport.Show();

@@ -86,6 +86,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ModelView\ExpenseForm.xaml.cs">
+      <DependentUpon>ExpenseForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Expense.cs" />
     <Compile Include="Reports\IncomeReport.xaml.cs">
       <DependentUpon>IncomeReport.xaml</DependentUpon>
     </Compile>
@@ -102,6 +106,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ModelView\ExpenseForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ModelView\IncomeForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

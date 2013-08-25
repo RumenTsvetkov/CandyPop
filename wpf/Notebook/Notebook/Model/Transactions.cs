@@ -6,9 +6,26 @@ namespace Notebook.Model
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using SQLDataAccessLayer;
     
-    public class Transactions
+    public abstract class Transactions
     {
+        public DateTime Date { get; set; }
+
+        public string InvoiceNumber { get; set; }
+
+        public string Address { get; set; }
+
+        public string NPWP { get; set; }
+
+        public string Note { get; set; }
+
+        public List<Product> Items { get; protected set; }
+
+        protected DbAccess dbConnection;
+
+        protected SqlManager sqlManager;
+
         public float Total 
         { 
             get
@@ -39,9 +56,20 @@ namespace Notebook.Model
             }
         }
 
-        protected virtual float CalculateGrandTotal()
+        public abstract void Load(string id);
+
+        public abstract void Save();
+
+        private float CalculateGrandTotal()
         {
-            return 0.0f;
+            var total = 0.0f;
+
+            foreach (var product in this.Items)
+            {
+                total += product.Price * product.Quantity;
+            }
+
+            return total;
         }
     }
 }

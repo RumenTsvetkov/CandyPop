@@ -79,7 +79,7 @@
             <MenuItem Name="file" Header="File" />
             <MenuItem Name="sheet" Header="Pembukuan" Click="sheet_Click">
                 <MenuItem Name="income" Header="Faktur penjualan baru" Click="IncomeButtonClicked"/>
-                <MenuItem Name="expenditure" Header="Faktur pajak baru" Click="ExpenseButtonClicked"/>                
+                <MenuItem Name="expenditure" Header="Faktur pembelian baru" Click="ExpenseButtonClicked"/>                
             </MenuItem>
         </Menu>
         <GroupBox Header="Pencarian" Height="75" Margin="12,29,0,0" Name="groupBox1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="479">

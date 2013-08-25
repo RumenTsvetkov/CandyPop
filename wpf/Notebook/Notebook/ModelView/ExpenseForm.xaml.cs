@@ -1,5 +1,4 @@
-﻿
-namespace Notebook.ModelView
+﻿namespace Notebook.ModelView
 {
     using System;
     using System.Collections.Generic;
@@ -17,15 +16,15 @@ namespace Notebook.ModelView
     using Notebook.Model;
 
     /// <summary>
-    /// Interaction logic for IncomeForm.xaml
+    /// Interaction logic for ExpenseForm.xaml
     /// </summary>
-    public partial class IncomeForm : Window
+    public partial class ExpenseForm : Window
     {
         private DbAccess dbAccess;
 
         private ObservableCollection<Product> products = new ObservableCollection<Product>();
 
-        public IncomeForm(DbAccess dbAccess)
+        public ExpenseForm(DbAccess dbAccess)
         {
             InitializeComponent();
             this.dbAccess = dbAccess;
@@ -48,22 +47,22 @@ namespace Notebook.ModelView
 
             if (string.IsNullOrEmpty(this.tbInvoiceNo.Text))
             {
-                error += "Error: Masukan no faktur penjualan !!\n";
+                error += "Error: Masukan no faktur pembelian !!\n";
             }
 
-            if (string.IsNullOrEmpty(this.tbBuyer.Text))
+            if (string.IsNullOrEmpty(this.tbSeller.Text))
             {
-                error += "Error: Masukan nama pembeli !!\n";
+                error += "Error: Masukan nama penjual !!\n";
             }
 
             if (string.IsNullOrEmpty(this.tbAddress.Text))
             {
-                error += "Error: Masukan alamat pembeli !!\n";
+                error += "Error: Masukan alamat penjual !!\n";
             }
 
             if (this.datePicker.SelectedDate == null)
             {
-                error += "Error: Masukan tanggal faktur penjualan !!\n";
+                error += "Error: Masukan tanggal faktur pembelian !!\n";
             }
 
             if (this.products.Count == 0)
@@ -77,19 +76,19 @@ namespace Notebook.ModelView
                 return;
             }
 
-            var income = new Income(this.dbAccess);
+            var expense = new Expense(this.dbAccess);
 
-            income.InvoiceNumber = this.tbInvoiceNo.Text;
-            income.Buyer = this.tbBuyer.Text;
-            income.Address = this.tbAddress.Text;
-            income.Date = (DateTime)this.datePicker.SelectedDate;
+            expense.InvoiceNumber = this.tbInvoiceNo.Text;
+            expense.Seller = this.tbSeller.Text;
+            expense.Address = this.tbAddress.Text;
+            expense.Date = (DateTime)this.datePicker.SelectedDate;
 
             foreach (var product in this.products)
             {
-                income.Items.Add(product);
+                expense.Items.Add(product);
             }
 
-            income.Save();
+            expense.Save();
 
             this.DialogBox("Transaksi tersimpan.", "Success");
             this.Close();
