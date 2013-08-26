@@ -20,8 +20,8 @@
         public override void Load(string id)
         {
             object[] result = sqlManager.SelectFrom(
-                   "Income",
-                   new string[] { "NB_FAKTUR", "DT_DATE", "NM_CLIENT", "DS_ADDRESS", "NM_ITEM", "QT_PRICE", "QT_QUANTITY" },
+                   "Expense",
+                   new string[] { "NB_FAKTUR", "DT_DATE", "NM_SELLER", "DS_ADDRESS", "NM_ITEM", "QT_PRICE", "QT_QUANTITY" },
                    string.Format("NB_FAKTUR = '{0}'", id));
 
             foreach (object record in result)
@@ -29,7 +29,7 @@
                 Dictionary<string, object> temp = (Dictionary<string, object>)record;
                 InvoiceNumber = temp["NB_FAKTUR"].ToString();
                 Date = (DateTime)temp["DT_DATE"];
-                Seller = temp["NM_CLIENT"].ToString();
+                Seller = temp["NM_SELLER"].ToString();
                 Address = temp["DS_ADDRESS"].ToString();
 
                 Product item = new Product();
@@ -49,7 +49,7 @@
                 // SaveDataToDb(this.Invoice_number, this.Date, this.Buyer, this.Address, item.Name, item.Price, item.Quantity)
                 sqlManager.InsertInto(
                         "Expense",
-                        new string[] { "NB_FAKTUR", "DT_DATE", "NM_CLIENT", "DS_ADDRESS", "NM_ITEM", "QT_PRICE", "QT_QUANTITY" },
+                        new string[] { "NB_FAKTUR", "DT_DATE", "NM_SELLER", "DS_ADDRESS", "NM_ITEM", "QT_PRICE", "QT_QUANTITY" },
                         new object[] { InvoiceNumber, Date, Seller, Address, item.Name, item.Price, item.Quantity },
                         string.Empty);
             }
