@@ -51,7 +51,10 @@ namespace Notebook.Model
         {
             get
             {
-                // TODO: fix this as soon as we have expenses class.
+                if (this is Expense)
+                {
+                    return string.Format("Rp {0:0.00}", this.Total);
+                }
                 return "-";
             }
         }
