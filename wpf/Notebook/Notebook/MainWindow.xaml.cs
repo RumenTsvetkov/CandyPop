@@ -122,11 +122,33 @@
 
         // TODO: make it work for both income and expenditure. (Gita)
         private void ViewTransactionClicked(object sender, RoutedEventArgs e)
-        {
-            Income selectedIncome = this.transactions.Where(
+        { 
+            for (var i = 0; i < this.transactions.Count; i++)
+                if (this.transactions[i].Debit == "-")
+                {
+                    if (this.transactions[i].InvoiceNumber == (sender as Button).Tag.ToString())
+                    {
+                        var incomeReport = new IncomeReport((Income)this.transactions[i]);
+                        incomeReport.Show();
+                    }
+                }
+                else
+                {
+                    if (this.transactions[i].InvoiceNumber == (sender as Button).Tag.ToString())
+                    {
+                        var expenseReport = new ExpenseReport((Expense)this.transactions[i]);
+                        expenseReport.Show();
+                       
+                    }
+                }
+
+            
+            /*
+             * Income selectedIncome = this.transactions.Where(
                 i => (sender as Button).Tag.ToString() == (i as Income).InvoiceNumber).Single() as Income;
             var incomeReport = new IncomeReport(selectedIncome);
             incomeReport.Show();
+             */
         }
 
         private void sheet_Click(object sender, RoutedEventArgs e)

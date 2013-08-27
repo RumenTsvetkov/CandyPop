@@ -1,0 +1,185 @@
+﻿<FlowDocument xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:xrd="clr-namespace:CodeReason.Reports.Document;assembly=CodeReason.Reports"
+              PageHeight="29.7cm" PageWidth="21cm" ColumnWidth="21cm">
+    <xrd:ReportProperties>
+        <xrd:ReportProperties.ReportName>ExpenseReport</xrd:ReportProperties.ReportName>
+        <xrd:ReportProperties.ReportTitle>Faktur Pembelian</xrd:ReportProperties.ReportTitle>
+    </xrd:ReportProperties>
+    <Section Padding="80,10,40,10" FontSize="12">
+        <Paragraph FontSize="24" FontWeight="Bold">
+            <xrd:InlineContextValue PropertyName="ReportTitle" />
+            <LineBreak/>
+        </Paragraph>        
+        <Table>
+            <Table.Columns>
+                <TableColumn Width="2*" />
+                <TableColumn Width="*" />
+            </Table.Columns>
+            <TableRowGroup>
+                <TableRow>
+                    <TableCell>
+                        <Paragraph>
+                            <Bold>SGFOOD Indonesia</Bold><LineBreak/>
+                            Jln. Budi Utomo 686 Sokaraja Banyumas 53181<LineBreak/>
+                            Telp. (0281) 644116 Fax. (0281) 6441116<LineBreak/>
+                            46.776.665.5.521.000<LineBreak/>
+                        </Paragraph>
+                    </TableCell>
+                    <TableCell>
+                        <Paragraph>
+                            Kepada Yth:<LineBreak/>
+                            <Bold>
+                                <xrd:InlineDocumentValue PropertyName="Seller"/>
+                            </Bold>
+                            <LineBreak/>
+                            <xrd:InlineDocumentValue PropertyName="Address"/>
+                        </Paragraph>
+                    </TableCell>
+                </TableRow>
+            </TableRowGroup>
+        </Table>
+        <xrd:SectionDataGroup DataGroupName="ItemList">
+            <Table CellSpacing="0" BorderBrush="Black" BorderThickness="0.02cm">
+                <Table.Resources>
+                    <!-- Style for header/footer rows. -->
+                    <Style x:Key="headerFooterRowStyle" TargetType="{x:Type TableRowGroup}">
+                        <Setter Property="FontWeight" Value="DemiBold" />
+                        <Setter Property="FontSize" Value="16"/>
+                    </Style>
+
+                    <!-- Style for second header/footer rows. -->
+                    <Style x:Key="secondHeaderFooterRowStyle" TargetType="{x:Type TableRowGroup}">
+                        <Setter Property="FontWeight" Value="DemiBold" />
+                        <Setter Property="FontSize" Value="13"/>
+                    </Style>
+                    
+                    <!-- Style for data cells. -->
+                    <Style TargetType="{x:Type TableCell}">
+                        <Setter Property="Padding" Value="0.1cm"/>
+                        <Setter Property="BorderBrush" Value="Black"/>
+                        <Setter Property="BorderThickness" Value="0.01cm"/>
+                    </Style>
+                </Table.Resources>
+                <Table.Columns>
+                    <TableColumn Width="0.2*" />
+                    <TableColumn Width="*" />
+                    <TableColumn Width="0.5*" />
+                    <TableColumn Width="0.5*" />
+                    <TableColumn Width="0.5*" />
+                </Table.Columns>
+                <TableRowGroup Style="{StaticResource headerFooterRowStyle}">
+                    <TableRow>
+                        <TableCell ColumnSpan="5">
+                            <Paragraph TextAlignment="Center">
+                                <Bold>FAKTUR PEMBELIAN</Bold>
+                            </Paragraph>
+                        </TableCell>
+                    </TableRow>                    
+                </TableRowGroup>
+                <TableRowGroup>
+                    <TableRow>
+                        <TableCell ColumnSpan="3">
+                            <Paragraph>
+                                Tanggal <xrd:InlineDocumentValue PropertyName="TransactionDate"/>
+                            </Paragraph>
+                        </TableCell>
+                        <TableCell ColumnSpan="2">
+                            <Paragraph>
+                                Faktur No: <xrd:InlineDocumentValue PropertyName="InvoiceNumber"/>
+                            </Paragraph>
+                        </TableCell>
+                    </TableRow>
+                </TableRowGroup>
+                <TableRowGroup Style="{StaticResource secondHeaderFooterRowStyle}">
+                    <TableRow>
+                        <TableCell>
+                            <Paragraph>No</Paragraph>
+                        </TableCell>
+                        <TableCell>
+                            <Paragraph>Nama Barang</Paragraph>
+                        </TableCell>
+                        <TableCell>
+                            <Paragraph>Qty</Paragraph>
+                        </TableCell>
+                        <TableCell>
+                            <Paragraph>Harga Satuan</Paragraph>
+                        </TableCell>
+                        <TableCell>
+                            <Paragraph>Jumlah</Paragraph>
+                        </TableCell>
+                    </TableRow>
+                </TableRowGroup>
+                <TableRowGroup>
+                    <xrd:TableRowForDataTable TableName="list">
+                        <TableCell>
+                            <Paragraph>
+                                <xrd:InlineTableCellValue PropertyName="No"/>
+                            </Paragraph>
+                        </TableCell>
+                        <TableCell>
+                            <Paragraph>
+                                <xrd:InlineTableCellValue PropertyName="Name"/>
+                            </Paragraph>
+                        </TableCell>
+                        <TableCell>
+                            <Paragraph>
+                                <xrd:InlineTableCellValue PropertyName="Quantity"/>
+                            </Paragraph>
+                        </TableCell>
+                        <TableCell>
+                            <Paragraph>
+                                <xrd:InlineTableCellValue PropertyName="Price"/>
+                            </Paragraph>
+                        </TableCell>
+                        <TableCell>
+                            <Paragraph>
+                                <xrd:InlineTableCellValue PropertyName="TotalPrice"/>
+                            </Paragraph>
+                        </TableCell>
+                    </xrd:TableRowForDataTable>
+                </TableRowGroup>
+                <TableRowGroup Style="{StaticResource secondHeaderFooterRowStyle}">
+                    <TableRow>
+                        <TableCell ColumnSpan="3">
+                        </TableCell>
+                        <TableCell>
+                            <Paragraph>
+                                    Grand Total
+                            </Paragraph>
+                        </TableCell>
+                        <TableCell>
+                            <Paragraph>
+                                <xrd:InlineDocumentValue PropertyName="GrandTotal"/>
+                            </Paragraph>
+                        </TableCell>
+                    </TableRow>
+                </TableRowGroup>
+            </Table>
+        </xrd:SectionDataGroup>
+        <Paragraph>
+            <LineBreak/>
+            <LineBreak/>
+        </Paragraph>
+        <Table>
+            <Table.Columns>
+                <TableColumn Width="2*" />
+                <TableColumn Width="*" />
+            </Table.Columns>
+            <TableRowGroup>
+                <TableRow>
+                    <TableCell>
+                        <Paragraph>
+                           Jatuh tempo,
+                        </Paragraph>
+                    </TableCell>
+                    <TableCell>
+                        <Paragraph>
+                            Penerima,
+                        </Paragraph>
+                    </TableCell>
+                </TableRow>
+            </TableRowGroup>
+        </Table>
+    </Section>
+</FlowDocument>
