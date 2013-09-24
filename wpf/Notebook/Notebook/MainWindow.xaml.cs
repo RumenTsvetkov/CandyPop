@@ -167,6 +167,34 @@
 
         private void DeleteTransactionClicked(object sender, RoutedEventArgs e)
         {
+            var sqlManager = this.dbAccess.GetDBConnection();
+     
+            for (var i = 0; i < this.transactions.Count; i++)
+            {
+                if (this.transactions[i] is Income)
+                {
+                    if (this.transactions[i].InvoiceNumber == (sender as Button).Tag.ToString())
+                    {
+                        //delete from db
+                        sqlManager.DeleteFrom("Income", string.Format("NB_FAKTUR = '{0}'", this.transactions[i].InvoiceNumber));
+
+                        //update transaction view
+                        this.transactions.Remove(this.transactions[i]);
+                        this.table.ItemsSource = this.transactions;
+                    }
+                }
+                else
+                {
+                    if (this.transactions[i].InvoiceNumber == (sender as Button).Tag.ToString())
+                    {
+                        sqlManager.DeleteFrom("Expense", string.Format("NB_FAKTUR = '{0}'", this.transactions[i].InvoiceNumber));
+                        this.transactions.Remove(this.transactions[i]);
+                        this.table.ItemsSource = this.transactions;
+                    }
+                }
+            }
+            
+
         }
     }
 }
