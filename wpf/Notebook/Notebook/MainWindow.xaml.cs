@@ -48,45 +48,42 @@
         }
 
         // TODO: should search both incomes and expenditure
-        private void FindIncomeTransactions(DateTime startDate, DateTime endDate)
+        private void FindTransactions(DateTime startDate, DateTime endDate)
         {
-            var result = this.getFaktursByDates(startDate, endDate, "Income");
+            var result = this.GetTransactionsByDates(startDate, endDate, "Income");
             
-            var fakturs = new List<string>();
+            var transactions = new List<string>();
             foreach (object record in result)
             {
                 Dictionary<string, object> temp = (Dictionary<string, object>)record;
-                fakturs.Add(temp["NB_FAKTUR"].ToString());
+                transactions.Add(temp["NB_FAKTUR"].ToString());
             }
 
-            var faktursNoDupes = fakturs.Distinct().ToList();
-            foreach (string faktur in faktursNoDupes)
+            transactions = transactions.Distinct().ToList();
+            foreach (string trans in transactions)
             {
                 var income = new Income(this.dbAccess);
-                income.Load(faktur);
+                income.Load(trans);
                 this.transactions.Add(income);
-            }            
-        }
-        private void FindExpenseTransactions(DateTime startDate, DateTime endDate)
-        {
-            var result = this.getFaktursByDates(startDate, endDate, "Expense"); 
+            }
 
-            var fakturs = new List<string>();
+            result = this.GetTransactionsByDates(startDate, endDate, "Expense");
+            transactions = new List<string>();
             foreach (object record in result)
             {
                 Dictionary<string, object> temp = (Dictionary<string, object>)record;
-                fakturs.Add(temp["NB_FAKTUR"].ToString());
+                transactions.Add(temp["NB_FAKTUR"].ToString());
             }
 
-            var faktursNoDupes = fakturs.Distinct().ToList();
-            foreach (string faktur in faktursNoDupes)
+            transactions = transactions.Distinct().ToList();
+            foreach (string trans in transactions)
             {
                 var expense = new Expense(this.dbAccess);
-                expense.Load(faktur);
+                expense.Load(trans);
                 this.transactions.Add(expense);
             }
         }
-        // TODO: should display both incomes and expenditure (Gita)
+
         private void FindClicked(object sender, RoutedEventArgs e)
         {
             if (dStart.ToString() == "")
@@ -105,8 +102,10 @@
             else
             {
                 this.transactions.Clear();
-                this.FindIncomeTransactions((DateTime)dStart.SelectedDate, (DateTime)dEnd.SelectedDate);
-                this.FindExpenseTransactions((DateTime)dStart.SelectedDate, (DateTime)dEnd.SelectedDate);
+                this.FindTransactions((DateTime)dStart.SelectedDate, (DateTime)dEnd.SelectedDate);
+                this.transactions = new ObservableCollection<Transactions>(from i in this.transactions orderby i.Date select i);
+                this.table.ItemsSource = this.transactions;
+                
                 if (this.transactions.Count == 0)
                 {
                     MessageBox.Show("Tidak ditemukan daftar transaksi");
@@ -120,11 +119,11 @@
             expenseForm.Show();
         }
 
-        // TODO: make it work for both income and expenditure. (Gita)
         private void ViewTransactionClicked(object sender, RoutedEventArgs e)
-        { 
+        {
             for (var i = 0; i < this.transactions.Count; i++)
-                if (this.transactions[i].Debit == "-")
+            {
+                if (this.transactions[i] is Income)
                 {
                     if (this.transactions[i].InvoiceNumber == (sender as Button).Tag.ToString())
                     {
@@ -138,24 +137,17 @@
                     {
                         var expenseReport = new ExpenseReport((Expense)this.transactions[i]);
                         expenseReport.Show();
-                       
+
                     }
                 }
-
-            
-            /*
-             * Income selectedIncome = this.transactions.Where(
-                i => (sender as Button).Tag.ToString() == (i as Income).InvoiceNumber).Single() as Income;
-            var incomeReport = new IncomeReport(selectedIncome);
-            incomeReport.Show();
-             */
+            }
         }
 
         private void sheet_Click(object sender, RoutedEventArgs e)
         {
         }
 
-        private object[] getFaktursByDates(DateTime startDate, DateTime endDate, string dbtablename)
+        private object[] GetTransactionsByDates(DateTime startDate, DateTime endDate, string dbtablename)
         {
             var sqlManager = this.dbAccess.GetDBConnection();
 
@@ -167,6 +159,14 @@
                    new string[] { "NB_FAKTUR" },
                    "DT_DATE between " + "'" + newStartDate + "' and '" + newEndDate + "'");
             return result;
+        }
+
+        private void EditTransactionClicked(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void DeleteTransactionClicked(object sender, RoutedEventArgs e)
+        {
         }
     }
 }

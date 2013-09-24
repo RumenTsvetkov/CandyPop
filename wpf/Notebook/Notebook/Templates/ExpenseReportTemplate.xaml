@@ -28,7 +28,7 @@
                     </TableCell>
                     <TableCell>
                         <Paragraph>
-                            Kepada Yth:<LineBreak/>
+                            Penjual:<LineBreak/>
                             <Bold>
                                 <xrd:InlineDocumentValue PropertyName="Seller"/>
                             </Bold>
@@ -160,26 +160,6 @@
         <Paragraph>
             <LineBreak/>
             <LineBreak/>
-        </Paragraph>
-        <Table>
-            <Table.Columns>
-                <TableColumn Width="2*" />
-                <TableColumn Width="*" />
-            </Table.Columns>
-            <TableRowGroup>
-                <TableRow>
-                    <TableCell>
-                        <Paragraph>
-                           Jatuh tempo,
-                        </Paragraph>
-                    </TableCell>
-                    <TableCell>
-                        <Paragraph>
-                            Penerima,
-                        </Paragraph>
-                    </TableCell>
-                </TableRow>
-            </TableRowGroup>
-        </Table>
+        </Paragraph>        
     </Section>
 </FlowDocument>

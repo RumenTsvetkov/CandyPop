@@ -55,6 +55,7 @@ namespace Notebook.Model
                 {
                     return string.Format("Rp {0:0.00}", this.Total);
                 }
+
                 return "-";
             }
         }

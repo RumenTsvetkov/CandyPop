@@ -24,9 +24,19 @@
                 <Label Style="{StaticResource RowStyle}" Grid.Column="1" Content="{Binding Path=InvoiceNumber, Mode=OneWay}" />
                 <Label Style="{StaticResource RowStyle}" Grid.Column="2" Content="{Binding Path=Debit, Mode=OneWay}" />
                 <Label Style="{StaticResource RowStyle}" Grid.Column="3" Content="{Binding Path=Credit, Mode=OneWay}" />
-                <Button Grid.Column="4" Width="28" Height="28" Click="ViewTransactionClicked" Tag="{Binding Path=InvoiceNumber}">
+                <Button Grid.Column="4" Width="28" Height="28" Click="ViewTransactionClicked" Tag="{Binding Path=InvoiceNumber}" HorizontalAlignment="Left" Margin="2">
                     <StackPanel>
                         <Image Source="/Notebook;component/Icons/view-icon.png" Width="20" Height="20"/>
+                    </StackPanel>
+                </Button>
+                <Button Grid.Column="4" Width="28" Height="28" Click="EditTransactionClicked" Tag="{Binding Path=InvoiceNumber}" HorizontalAlignment="Left" Margin="32,0,0,0">
+                    <StackPanel>
+                        <Image Source="/Notebook;component/Icons/edit-icon.png" Width="20" Height="20"/>
+                    </StackPanel>
+                </Button>
+                <Button Grid.Column="4" Width="28" Height="28" Click="DeleteTransactionClicked" Tag="{Binding Path=InvoiceNumber}" HorizontalAlignment="Left" Margin="62,0,0,0">
+                    <StackPanel>
+                        <Image Source="/Notebook;component/Icons/delete-icon.png" Width="20" Height="20"/>
                     </StackPanel>
                 </Button>
             </Grid>

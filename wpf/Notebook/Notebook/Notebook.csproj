@@ -125,16 +125,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Resource Include="Icons\edit-icon.png" />
+    <Resource Include="Icons\delete-icon.png" />
     <Content Include="Templates\IncomeReportTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Page Include="Templates\ExpenseReportTemplate.xaml">
+    <Content Include="Templates\ExpenseReportTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ModelView\IncomeForm.xaml.cs">
