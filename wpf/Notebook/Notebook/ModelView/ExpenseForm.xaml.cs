@@ -24,10 +24,33 @@
 
         private ObservableCollection<Product> products = new ObservableCollection<Product>();
 
+        private Expense expense;
+
         public ExpenseForm(DbAccess dbAccess)
         {
             InitializeComponent();
             this.dbAccess = dbAccess;
+
+            this.expense = new Expense(this.dbAccess);
+            this.dgProducts.ItemsSource = this.Products;
+        }
+
+        public ExpenseForm(DbAccess dbAccess, Expense expense)
+        {
+            InitializeComponent();
+            this.dbAccess = dbAccess;
+            this.expense = expense;
+
+            // populate the form with the given expense data.
+            this.tbInvoiceNo.Text = this.expense.InvoiceNumber;
+            this.tbSeller.Text = this.expense.Seller;
+            this.tbAddress.Text = this.expense.Address;
+            this.datePicker.SelectedDate = this.expense.Date;
+
+            foreach (var product in this.expense.Items)
+            {
+                this.Products.Add(product);
+            }
 
             this.dgProducts.ItemsSource = this.Products;
         }
@@ -76,19 +99,17 @@
                 return;
             }
 
-            var expense = new Expense(this.dbAccess);
-
-            expense.InvoiceNumber = this.tbInvoiceNo.Text;
-            expense.Seller = this.tbSeller.Text;
-            expense.Address = this.tbAddress.Text;
-            expense.Date = (DateTime)this.datePicker.SelectedDate;
+            this.expense.InvoiceNumber = this.tbInvoiceNo.Text;
+            this.expense.Seller = this.tbSeller.Text;
+            this.expense.Address = this.tbAddress.Text;
+            this.expense.Date = (DateTime)this.datePicker.SelectedDate;
 
             foreach (var product in this.products)
             {
-                expense.Items.Add(product);
+                this.expense.Items.Add(product);
             }
 
-            expense.Save();
+            this.expense.Save();
 
             this.DialogBox("Transaksi tersimpan.", "Success");
             this.Close();

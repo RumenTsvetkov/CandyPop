@@ -20,10 +20,9 @@
     using Notebook.Reports;
 
     // TODO:
-    // 1. make the transactions editable (to be discussed).
-    // 2. make the transcations deletable (to be discussed).
-    // 3. feature for generating graph report (Indra).
-    // 4. Added expense table into database, have a look at Expense.cs to find out what need to be stored in the database (Felix). 
+    // 1. feature for generating table report (Indra).
+    // 2. feature for generating graph report (Indra).
+    // 2. feature for displaying sum (Indra).
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -47,7 +46,12 @@
             incomeForm.Show();
         }
 
-        // TODO: should search both incomes and expenditure
+        private void ExpenseButtonClicked(object sender, RoutedEventArgs e)
+        {
+            var expenseForm = new ExpenseForm(this.dbAccess);
+            expenseForm.Show();
+        }
+
         private void FindTransactions(DateTime startDate, DateTime endDate)
         {
             var result = this.GetTransactionsByDates(startDate, endDate, "Income");
@@ -113,33 +117,18 @@
             }
         }
 
-        private void ExpenseButtonClicked(object sender, RoutedEventArgs e)
-        {
-            var expenseForm = new ExpenseForm(this.dbAccess);
-            expenseForm.Show();
-        }
-
         private void ViewTransactionClicked(object sender, RoutedEventArgs e)
         {
-            for (var i = 0; i < this.transactions.Count; i++)
+            var transaction = this.transactions.Where(t => t.InvoiceNumber == (sender as Button).Tag.ToString()).First<Transactions>();
+            if (transaction is Income)
             {
-                if (this.transactions[i] is Income)
-                {
-                    if (this.transactions[i].InvoiceNumber == (sender as Button).Tag.ToString())
-                    {
-                        var incomeReport = new IncomeReport((Income)this.transactions[i]);
-                        incomeReport.Show();
-                    }
-                }
-                else
-                {
-                    if (this.transactions[i].InvoiceNumber == (sender as Button).Tag.ToString())
-                    {
-                        var expenseReport = new ExpenseReport((Expense)this.transactions[i]);
-                        expenseReport.Show();
-
-                    }
-                }
+                var incomeReport = new IncomeReport((Income)transaction);
+                incomeReport.Show();
+            }
+            else
+            {
+                var expenseReport = new ExpenseReport((Expense)transaction);
+                expenseReport.Show();
             }
         }
 
@@ -163,38 +152,43 @@
 
         private void EditTransactionClicked(object sender, RoutedEventArgs e)
         {
+            var transaction = this.transactions.Where(t => t.InvoiceNumber == (sender as Button).Tag.ToString()).First<Transactions>();
+
+            if (transaction != null)
+            {
+                if (transaction is Income)
+                {
+                    var incomeForm = new IncomeForm(this.dbAccess, (Income)transaction);
+                    incomeForm.Show();
+                }
+                else
+                {
+                    var expenseForm = new ExpenseForm(this.dbAccess, (Expense)transaction);
+                    expenseForm.Show();
+                }
+            }
         }
 
         private void DeleteTransactionClicked(object sender, RoutedEventArgs e)
         {
+            var transaction = this.transactions.Where(t => t.InvoiceNumber == (sender as Button).Tag.ToString()).First<Transactions>();
             var sqlManager = this.dbAccess.GetDBConnection();
-     
-            for (var i = 0; i < this.transactions.Count; i++)
-            {
-                if (this.transactions[i] is Income)
-                {
-                    if (this.transactions[i].InvoiceNumber == (sender as Button).Tag.ToString())
-                    {
-                        //delete from db
-                        sqlManager.DeleteFrom("Income", string.Format("NB_FAKTUR = '{0}'", this.transactions[i].InvoiceNumber));
 
-                        //update transaction view
-                        this.transactions.Remove(this.transactions[i]);
-                        this.table.ItemsSource = this.transactions;
-                    }
+            if (transaction != null)
+            {
+                if (transaction is Income)
+                {
+                    sqlManager.DeleteFrom("Income", string.Format("NB_FAKTUR = '{0}'", transaction.InvoiceNumber));
                 }
                 else
                 {
-                    if (this.transactions[i].InvoiceNumber == (sender as Button).Tag.ToString())
-                    {
-                        sqlManager.DeleteFrom("Expense", string.Format("NB_FAKTUR = '{0}'", this.transactions[i].InvoiceNumber));
-                        this.transactions.Remove(this.transactions[i]);
-                        this.table.ItemsSource = this.transactions;
-                    }
+                    sqlManager.DeleteFrom("Expense", string.Format("NB_FAKTUR = '{0}'", transaction.InvoiceNumber));
                 }
-            }
-            
 
+                //update transaction view
+                this.transactions.Remove(transaction);
+                this.table.ItemsSource = this.transactions;
+            }
         }
     }
 }

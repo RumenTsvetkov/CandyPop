@@ -25,10 +25,33 @@ namespace Notebook.ModelView
 
         private ObservableCollection<Product> products = new ObservableCollection<Product>();
 
+        private Income income;
+
         public IncomeForm(DbAccess dbAccess)
         {
             InitializeComponent();
             this.dbAccess = dbAccess;
+
+            this.income = new Income(this.dbAccess);
+            this.dgProducts.ItemsSource = this.Products;
+        }
+
+        public IncomeForm(DbAccess dbAccess, Income income)
+        {
+            InitializeComponent();
+            this.dbAccess = dbAccess;
+            this.income = income;
+
+            // populate the form with the given income data.
+            this.tbInvoiceNo.Text = this.income.InvoiceNumber; 
+            this.tbBuyer.Text = this.income.Buyer;
+            this.tbAddress.Text = this.income.Address ;
+            this.datePicker.SelectedDate = this.income.Date;
+
+            foreach (var product in this.income.Items)
+            {
+                this.Products.Add(product);
+            }
 
             this.dgProducts.ItemsSource = this.Products;
         }
@@ -77,19 +100,17 @@ namespace Notebook.ModelView
                 return;
             }
 
-            var income = new Income(this.dbAccess);
-
-            income.InvoiceNumber = this.tbInvoiceNo.Text;
-            income.Buyer = this.tbBuyer.Text;
-            income.Address = this.tbAddress.Text;
-            income.Date = (DateTime)this.datePicker.SelectedDate;
+            this.income.InvoiceNumber = this.tbInvoiceNo.Text;
+            this.income.Buyer = this.tbBuyer.Text;
+            this.income.Address = this.tbAddress.Text;
+            this.income.Date = (DateTime)this.datePicker.SelectedDate;
 
             foreach (var product in this.products)
             {
-                income.Items.Add(product);
+                this.income.Items.Add(product);
             }
 
-            income.Save();
+            this.income.Save();
 
             this.DialogBox("Transaksi tersimpan.", "Success");
             this.Close();
