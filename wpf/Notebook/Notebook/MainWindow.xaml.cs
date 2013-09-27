@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.ComponentModel;
     using System.Linq;
     using System.Text;
     using System.Windows;
@@ -16,8 +17,8 @@
     using System.Windows.Shapes;
     using Notebook.Model;
     using Notebook.ModelView;
-    using SQLDataAccessLayer;
     using Notebook.Reports;
+    using SQLDataAccessLayer;
 
     // TODO:
     // 1. feature for generating table report (Indra).
@@ -26,11 +27,17 @@
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         private DbAccess dbAccess;
 
         private ObservableCollection<Transactions> transactions = new ObservableCollection<Transactions>();
+
+        private float creditBalance;
+
+        private float debitBalance;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public MainWindow()
         {
@@ -38,6 +45,53 @@
 
             this.dbAccess = new DbAccess();           
             this.table.ItemsSource = this.transactions;
+        }
+
+        public string CreditBalance
+        {
+            get
+            {
+                return string.Format(Messages.CurrencyFormatting, this.creditBalance, "CR");
+            }
+        }
+
+        public string DebitBalance
+        {
+            get
+            {
+                return string.Format(Messages.CurrencyFormatting, this.debitBalance, "DB");
+            }
+        }
+
+        public string Balance
+        {
+            get
+            {
+                var balance = this.creditBalance - this.debitBalance;
+                return string.Format(
+                    Messages.CurrencyFormatting, 
+                    balance,
+                    balance < 0 ? "DB" : "CR");
+            }
+        }
+
+        private bool SetField<T>(ref T field, T value, string propertyName)
+        {
+            if (EqualityComparer<T>.Default.Equals(field, value))
+                return false;
+
+            field = value;
+            this.OnPropertyChange(propertyName);            
+            return true;
+        }
+
+        private void OnPropertyChange(string propertyName)
+        {
+            var handler = this.PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
         private void IncomeButtonClicked(object sender, RoutedEventArgs e)
@@ -68,7 +122,7 @@
             {
                 var income = new Income(this.dbAccess);
                 income.Load(trans);
-                this.transactions.Add(income);
+                this.AddTransaction(income);
             }
 
             result = this.GetTransactionsByDates(startDate, endDate, "Expense");
@@ -84,7 +138,7 @@
             {
                 var expense = new Expense(this.dbAccess);
                 expense.Load(trans);
-                this.transactions.Add(expense);
+                this.AddTransaction(expense);
             }
         }
 
@@ -105,6 +159,8 @@
             }
             else
             {
+                creditBalance = 0;
+                debitBalance = 0;
                 this.transactions.Clear();
                 this.FindTransactions((DateTime)dStart.SelectedDate, (DateTime)dEnd.SelectedDate);
                 this.transactions = new ObservableCollection<Transactions>(from i in this.transactions orderby i.Date select i);
@@ -186,9 +242,43 @@
                 }
 
                 //update transaction view
-                this.transactions.Remove(transaction);
+                this.RemoveTransaction(transaction);
                 this.table.ItemsSource = this.transactions;
             }
+        }
+
+        private void AddTransaction(Transactions transaction)
+        {
+            this.transactions.Add(transaction);
+
+            // update the balance
+            if (transaction is Income)
+            {
+                this.SetField<float>(ref this.creditBalance, this.creditBalance + transaction.Total, "CreditBalance");
+            }
+            else
+            {
+                this.SetField<float>(ref this.debitBalance, this.debitBalance + transaction.Total, "DebitBalance");
+            }
+
+            this.OnPropertyChange("Balance");
+        }
+
+        private void RemoveTransaction(Transactions transaction)
+        {
+            this.transactions.Remove(transaction);
+
+            // update the balance
+            if (transaction is Income)
+            {
+                this.SetField<float>(ref this.creditBalance, this.creditBalance - transaction.Total, "CreditBalance");
+            }
+            else
+            {
+                this.SetField<float>(ref this.debitBalance, this.debitBalance - transaction.Total, "DebitBalance");
+            }
+
+            this.OnPropertyChange("Balance");
         }
     }
 }

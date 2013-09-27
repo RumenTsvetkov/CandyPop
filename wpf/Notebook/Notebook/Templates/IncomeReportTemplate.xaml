@@ -129,12 +129,12 @@
                         </TableCell>
                         <TableCell>
                             <Paragraph>
-                                <xrd:InlineTableCellValue PropertyName="Price"/>
+                                <xrd:InlineTableCellValue PropertyName="Price" Format="Rp #,##0.00;(Rp #,##0.00);0"/>
                             </Paragraph>
                         </TableCell>
                         <TableCell>
                             <Paragraph>
-                                <xrd:InlineTableCellValue PropertyName="TotalPrice"/>
+                                <xrd:InlineTableCellValue PropertyName="TotalPrice" Format="Rp #,##0.00;(Rp #,##0.00);0"/>
                             </Paragraph>
                         </TableCell>
                     </xrd:TableRowForDataTable>
@@ -150,7 +150,7 @@
                         </TableCell>
                         <TableCell>
                             <Paragraph>
-                                <xrd:InlineDocumentValue PropertyName="GrandTotal"/>
+                                <xrd:InlineDocumentValue PropertyName="GrandTotal" Format="Rp #,##0.00;(Rp #,##0.00);0"/>
                             </Paragraph>
                         </TableCell>
                     </TableRow>

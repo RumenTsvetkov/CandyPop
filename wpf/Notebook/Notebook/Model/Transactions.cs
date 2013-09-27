@@ -40,7 +40,7 @@ namespace Notebook.Model
             {
                 if (this is Income)
                 {
-                    return string.Format("Rp {0:0.00}", this.Total);
+                    return string.Format(Messages.CurrencyFormatting2, this.Total);
                 }
 
                 return "-";
@@ -53,7 +53,7 @@ namespace Notebook.Model
             {
                 if (this is Expense)
                 {
-                    return string.Format("Rp {0:0.00}", this.Total);
+                    return string.Format(Messages.CurrencyFormatting2, this.Total);
                 }
 
                 return "-";
