@@ -90,6 +90,9 @@
       <DependentUpon>ExpenseForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\Expense.cs" />
+    <Compile Include="Reports\AccountReport.xaml.cs">
+      <DependentUpon>AccountReport.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reports\ExpenseReport.xaml.cs">
       <DependentUpon>ExpenseReport.xaml</DependentUpon>
     </Compile>
@@ -122,6 +125,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Reports\AccountReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Reports\ExpenseReport.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -130,6 +137,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Content Include="Templates\AccountReportTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Icons\edit-icon.png" />
     <Resource Include="Icons\delete-icon.png" />
     <Content Include="Templates\IncomeReportTemplate.xaml">

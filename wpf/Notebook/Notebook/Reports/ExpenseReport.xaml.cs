@@ -67,7 +67,7 @@
                 data.ReportDocumentValues.Add("GrandTotal", this.expense.Total);
 
                 XpsDocument xps = reportDocument.CreateXpsDocument(data);
-                documentViewer.Document = xps.GetFixedDocumentSequence();
+                this.documentViewer.Document = xps.GetFixedDocumentSequence();
             }
             catch (Exception error)
             {

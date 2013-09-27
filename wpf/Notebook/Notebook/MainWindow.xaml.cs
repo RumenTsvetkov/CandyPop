@@ -280,5 +280,11 @@
 
             this.OnPropertyChange("Balance");
         }
+
+        private void GenerateReport(object sender, RoutedEventArgs e)
+        {
+            var accountReport = new AccountReport(this.transactions.ToList<Transactions>());
+            accountReport.Show();
+        }
     }
 }

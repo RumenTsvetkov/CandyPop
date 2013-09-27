@@ -102,8 +102,8 @@
                 <Button Content="Tampilkan" Height="23" HorizontalAlignment="Right" Margin="0,15,54,0" Name="bFind" Click="FindClicked" VerticalAlignment="Top" Width="75" />
             </Grid>
         </GroupBox>
-        <HeaderedItemsControl Name="table" Style="{StaticResource ViewedGrid}" Margin="12,110,12,100" ItemTemplate="{StaticResource itemWithViewButton}" ItemsSource="{Binding Path=Transactions}" DataContext="{Binding}" />
-        <Grid Margin="12,0,12,10" Height="90" VerticalAlignment="Bottom" MinHeight="90">
+        <HeaderedItemsControl Name="table" Style="{StaticResource ViewedGrid}" Margin="12,110,12,150" ItemTemplate="{StaticResource itemWithViewButton}" ItemsSource="{Binding Path=Transactions}" DataContext="{Binding}" />
+        <Grid Margin="12,0,12,60" Height="90" VerticalAlignment="Bottom" MinHeight="90">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -126,5 +126,6 @@
             <Label Style="{StaticResource RowStyle}" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Content="{Binding Path=DebitBalance, Mode=OneWay}" />
             <Label Style="{StaticResource RowStyle}" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" Content="{Binding Path=Balance, Mode=OneWay}" />
         </Grid>
+        <Button Content="Laporan Laba Rugi" Height="23" HorizontalAlignment="Left" Margin="435,643,0,0" Name="bGeneratReport" VerticalAlignment="Top" Width="106" Click="GenerateReport"/>
     </Grid>
 </Window>
