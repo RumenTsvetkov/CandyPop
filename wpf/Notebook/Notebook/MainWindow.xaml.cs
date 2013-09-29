@@ -283,7 +283,7 @@
 
         private void GenerateReport(object sender, RoutedEventArgs e)
         {
-            var accountReport = new AccountReport(this.transactions.ToList<Transactions>());
+            var accountReport = new AccountReport(this.transactions.ToList<Transactions>(), this.creditBalance, this.debitBalance);
             accountReport.Show();
         }
     }

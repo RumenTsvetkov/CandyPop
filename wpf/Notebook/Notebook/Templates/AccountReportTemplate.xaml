@@ -77,12 +77,12 @@
                         </TableCell>
                         <TableCell>
                             <Paragraph>
-                                <xrd:InlineTableCellValue PropertyName="Debit" Format="(Rp #,##0.00)"/>
+                                <xrd:InlineTableCellValue PropertyName="Debit"/>
                             </Paragraph>
                         </TableCell>
                         <TableCell>
                             <Paragraph>
-                                <xrd:InlineTableCellValue PropertyName="Credit" Format="Rp #,##0.00"/>
+                                <xrd:InlineTableCellValue PropertyName="Credit"/>
                             </Paragraph>
                         </TableCell>
                     </xrd:TableRowForDataTable>
