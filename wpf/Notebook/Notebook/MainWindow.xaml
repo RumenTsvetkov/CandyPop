@@ -47,37 +47,41 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type HeaderedItemsControl}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="30"/>
-                                <RowDefinition Height="4*"/>
-                            </Grid.RowDefinitions>
-                            <Label Style="{StaticResource HeaderStyle}" Grid.Column="0" Grid.Row="0" Content="Tanggal" 
-                                       VerticalAlignment="Center"
-                                       FontWeight="Bold"/>
-                            <Label Style="{StaticResource HeaderStyle}" Grid.Column="1" Grid.Row="0" Content="Faktur no" 
-                                       VerticalAlignment="Center"
-                                       FontWeight="Bold"/>
-                            <Label Style="{StaticResource HeaderStyle}" Grid.Column="2" Grid.Row="0" Content="Debit" 
-                                       VerticalAlignment="Center"
-                                       FontWeight="Bold"/>
-                            <Label Style="{StaticResource HeaderStyle}" Grid.Column="3" Grid.Row="0" Content="Credit" 
-                                       VerticalAlignment="Center"
-                                       FontWeight="Bold"/>
-                            <Label Style="{StaticResource HeaderStyle}" Grid.Column="4" Grid.Row="0" Content="Actions"
-                                       VerticalAlignment="Center"
-                                       FontWeight="Bold"/>
-                            <Grid Grid.Row="1" Grid.ColumnSpan="5" Width="Auto" Height="Auto" Background="White">
-                                <ItemsPresenter/>
-                            </Grid>                            
-                        </Grid>                        
+                        <ScrollViewer>
+                            <StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="4*"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Style="{StaticResource HeaderStyle}" Grid.Column="0" Grid.Row="0" Content="Tanggal" 
+                                               VerticalAlignment="Center"
+                                               FontWeight="Bold"/>
+                                    <Label Style="{StaticResource HeaderStyle}" Grid.Column="1" Grid.Row="0" Content="Faktur no" 
+                                               VerticalAlignment="Center"
+                                               FontWeight="Bold"/>
+                                    <Label Style="{StaticResource HeaderStyle}" Grid.Column="2" Grid.Row="0" Content="Debit" 
+                                               VerticalAlignment="Center"
+                                               FontWeight="Bold"/>
+                                    <Label Style="{StaticResource HeaderStyle}" Grid.Column="3" Grid.Row="0" Content="Credit" 
+                                               VerticalAlignment="Center"
+                                               FontWeight="Bold"/>
+                                    <Label Style="{StaticResource HeaderStyle}" Grid.Column="4" Grid.Row="0" Content="Actions"
+                                               VerticalAlignment="Center"
+                                               FontWeight="Bold"/>
+                                    <Grid Grid.Row="1" Grid.ColumnSpan="5" Width="Auto" Height="Auto" Background="White">
+                                        <ItemsPresenter/>
+                                    </Grid>                            
+                                </Grid>
+                            </StackPanel>
+                        </ScrollViewer>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
